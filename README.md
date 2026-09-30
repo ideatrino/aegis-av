@@ -6,7 +6,7 @@
 <p align="center"><em>Adaptive Ensemble with Guaranteed-envelope Integrity Scoring</em></p>
 
 <p align="center">
-  <a href="https://github.com/ideatrino/aegis/actions/workflows/ci.yml"><img src="https://github.com/ideatrino/aegis/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/ideatrino/aegis-av/actions/workflows/ci.yml"><img src="https://github.com/ideatrino/aegis-av/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/license-MIT-3fc2bc" alt="MIT">
   <img src="https://img.shields.io/badge/python-3.9%2B-3fc2bc" alt="Python 3.9+">
   <img src="https://img.shields.io/badge/deps-numpy_only-3fc2bc" alt="numpy only">
