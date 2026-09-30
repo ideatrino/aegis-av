@@ -1,0 +1,49 @@
+// AEGIS custom rules — YARA-lite (design doc §20, §22)
+//
+// Install with:  aegis rules add rules.example
+// Test with:     aegis rules check rules.example <file>
+//
+// A rule's `severity` decides how it enters the Bayesian fusion — it is FUSED
+// under the same allowlist override and text protection as every detector,
+// never a bypass:
+//   severity = "block"   -> force BLOCK (the allowlist still overrides it)
+//   severity = "review"  -> surfaced for a human, never auto-quarantined
+//   severity = "score"   -> a plain weighted vote (weight = ...); the ensemble decides
+//
+// Patterns: "text" | /regex/ | { hex ?? wildcard }
+// Condition grammar: and or not ( )   #a >= 2   $a at 0   filesize < 2MB
+//                    any of them | all of them | N of them
+// A malformed pattern or condition is SKIPPED, never fatal.
+
+rule Campaign_Beacon {
+    meta:
+        severity = "review"
+    strings:
+        $host = "beacon.attacker.test"
+        $run  = "CurrentVersion\\Run"
+        $stub = { 60 BE ?? ?? ?? ?? 57 }      // ?? = wildcard byte
+    condition:
+        2 of them
+}
+
+rule Packed_PE_With_C2 {
+    meta:
+        severity = "score"
+        weight   = 1.2
+    strings:
+        $mz   = { 4D 5A }                       // "MZ"
+        $c2   = /https?:\/\/[0-9]{1,3}(\.[0-9]{1,3}){3}/
+        $push = { 60 }                          // pushad, common packer stub
+    condition:
+        $mz at 0 and ($c2 or #push >= 3) and filesize < 2MB
+}
+
+rule Small_Dropper_Marker {
+    meta:
+        severity = "block"
+        max_filesize = 4096                     // only fire on a small file that IS the artifact
+    strings:
+        $marker = "DROPPER::v1::stage2"
+    condition:
+        $marker and filesize < 4096
+}

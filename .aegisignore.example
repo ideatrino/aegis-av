@@ -1,0 +1,36 @@
+# AEGIS ignore file (design doc §16). Copy to `.aegisignore` in a folder you
+# scan (or in $HOME). One pattern per line. A bare word matches both a
+# directory anywhere in the tree and a file of that name, so you don't need to
+# learn glob syntax:
+#
+#   proofs          ->  skips */proofs/* AND a file named "proofs"
+#   *.iso           ->  skips ISO images
+#
+# Lines starting with # are comments. AEGIS never scans this file itself.
+
+# build / dependency trees a security scan usually shouldn't walk file-by-file
+# (note: node_modules is exactly where supply-chain malware hides, so excluding
+# it is a trade-off you are choosing — see `--skip-dev-noise`)
+node_modules
+.venv
+__pycache__
+target
+.git
+
+# large opaque artifacts that read as high-entropy by nature (§7)
+*.iso
+*.dmg
+
+# AEGIS's own generated corpus of malware fixtures, if you ran make-corpus here
+corpus
+
+# AEGIS's own package files necessarily contain attack-command strings and the
+# EICAR string as fixtures/documentation (the "tool meets itself" case, §8/§18).
+# Skip AEGIS trees so copies of the scanner in your Downloads don't self-flag.
+aegis-project
+aegis_pkg
+aegis-antivirus
+aegis-av
+AEGIS-design*.md
+DESIGN.md
+rules.example

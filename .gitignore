@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+
+# PyInstaller build output
+build/
+dist/
+*.spec
+
+# AEGIS runtime + generated artifacts
+corpus/
+*.trace
+*.aegistrace
+report.html
+*.quar
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Note: aegis/data/model.json IS committed on purpose — it's the pre-trained
+# model the GUI/app falls back to for an instant first launch.

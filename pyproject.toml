@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aegis-av"
+version = "5.9.1"
+description = "AEGIS — a calibrated Bayesian-consensus antivirus engine, built from the mathematics of detection."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name = "Ideatrino", email = "ideatrino@proton.me"}]
+dependencies = ["numpy>=1.20"]
+
+[project.scripts]
+aegis = "aegis.cli:main"
+aegis-gui = "aegis.gui:launch"
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[tool.setuptools.packages.find]
+include = ["aegis*"]
